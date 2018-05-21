@@ -5,25 +5,46 @@
     <title>Site checker</title>
 </head>
 <body>
-    <h1>HELLO = ))</h1>
+<h1>HELLO = ))</h1>
 
-    <div>
-        <div>Принимает txt файл с сайтами каждый в новой строке</div>
-        <form th:action="@{/}" method="post" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <input type="submit" value="Upload">
-        </form>
-    </div>
-    <h2 th:text="${successMessage}"></h2>
-    <table border="1" th:if="${checkedSites}">
-        <tr>
-            <th>Site</th>
-            <th>Status</th>
-        </tr>
-        <tr th:each="site : ${checkedSites}">
-            <td><a th:href="${site.key}" th:text="${site.key}"></a></td>
-            <td th:text="${site.value}"></td>
-        </tr>
-    </table>
+<div>
+    <div>Принимает txt файл с сайтами каждый в новой строке</div>
+    <form th:action="@{/}" method="post" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <th>File:</th>
+                <td><input type="file" name="file"></td>
+                <td><input type="submit" value="Upload"></td>
+            </tr>
+        </table>
+
+
+    </form>
+</div>
+<div>
+    <form action="#" th:action="@{/q}" method="get">
+        Поисковый запрос в google
+        <input type="text" name="searchRequest" th:placeholder="'Запрос для поиска'">
+
+        Колличество ссылок, которые будут запрошены у google
+        <input type="number" name="resultQuantity" value="Коллво ссылок для обработки">
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<h2 th:text="${successMessage}"></h2>
+<h2 th:text="${query}"></h2>
+<table border="1" th:if="${checkedSites}">
+    <tr>
+        <th>#</th>
+        <th>Site</th>
+        <th>Status</th>
+    </tr>
+    <tr th:each="site, iterStart : ${checkedSites}" >
+        <td th:text="${iterStart.count}"></td>
+        <td><a th:href="${site.key}" th:text="${site.key}"></a></td>
+        <td th:text="${site.value}"></td>
+    </tr>
+</table>
 </body>
 </html>

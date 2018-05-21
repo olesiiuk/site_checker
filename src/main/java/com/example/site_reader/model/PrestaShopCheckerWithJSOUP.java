@@ -1,5 +1,7 @@
 package com.example.site_reader.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 @Component
 public class PrestaShopCheckerWithJSOUP implements SiteChecker {
+    private static final Logger logger = LogManager.getLogger(PrestaShopCheckerWithJSOUP.class);
 
     private final String ELEMENT_NAME = "generator";
     private final String ELEMENT_CONTENT = "prestashop";
@@ -31,6 +34,7 @@ public class PrestaShopCheckerWithJSOUP implements SiteChecker {
     public String checkSite(String url) {
         Document doc = getDocument(url);
         if (doc == null) {
+            logger.info("site " + url + " cant be reached");
             return "Couldn't get html file";
         }
 
@@ -44,9 +48,10 @@ public class PrestaShopCheckerWithJSOUP implements SiteChecker {
     private Document getDocument(String url) {
         Document doc = null;
         try {
-            doc = Jsoup.connect(url).get();
+            doc = Jsoup.connect(url).userAgent("Mozilla/5.0").get();
+            logger.info("Checking site: " + url);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not get a file from URL: " + url);
         }
         return doc;
     }
