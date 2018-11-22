@@ -5,7 +5,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>site_reader</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <version>0.0.7-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>site_reader</name>
@@ -53,7 +53,6 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>
