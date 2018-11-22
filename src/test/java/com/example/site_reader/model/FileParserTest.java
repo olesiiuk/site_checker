@@ -1,5 +1,6 @@
 package com.example.site_reader.model;
 
+import com.example.site_reader.model.fileworker.FileParserImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
@@ -8,23 +9,24 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
 
 public class FileParserTest {
-    private Set<String> sites;
+    private List<String> sites;
     private MultipartFile file;
 
 
     @Before
     public void fillSites() {
-        sites = new HashSet<>();
+        sites = new ArrayList<>();
 
-        sites.add("http://oskar-nails.h1n.ru/");
         sites.add("http://www.quizful.net/post/java-nio-tutorial");
-
+        sites.add("http://oskar-nails.h1n.ru/");
 
         String fileContent = "http://www.quizful.net/post/java-nio-tutorial\n" +
                 "http://oskar-nails.h1n.ru/";

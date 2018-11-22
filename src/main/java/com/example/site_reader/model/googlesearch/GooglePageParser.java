@@ -8,12 +8,12 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class GooglePageParser implements LinkSearcher {
-    private Set<String> linkSet;
+    private List<String> links;
 
     private Logger logger = LogManager.getLogger(GooglePageParser.class);
 
@@ -24,12 +24,35 @@ public class GooglePageParser implements LinkSearcher {
         this.googlePageDownloader = googlePageDownloader;
     }
 
-    @Override
-    public Set<String> getSearchResultLinks(String searchRequest, int resultQuantity) {
+    public List<String> getSearchResultLinks(String searchRequest, int resultQuantity) {
+        if (isMultipartRequest(searchRequest)) {
+            return getMultipleSearchResultLinks(searchRequest, resultQuantity);
+        } else {
+            return getOneSearchResultLinks(searchRequest, resultQuantity);
+        }
+    }
+
+    private boolean isMultipartRequest(String searchRequest) {
+        return searchRequest.contains(",");
+    }
+
+    public List<String> getMultipleSearchResultLinks(String searchRequest, int resultQuantity) {
+        String[] requests = searchRequest.split(",");
+
+        List<String> result = new ArrayList<>();
+
+        for (String request : requests) {
+            result.addAll(getOneSearchResultLinks(request, resultQuantity));
+        }
+
+        return result;
+    }
+
+    public List<String> getOneSearchResultLinks(String searchRequest, int resultQuantity) {
         Document doc = googlePageDownloader.getPage(searchRequest, resultQuantity);
 
         Elements results = doc.select("h3.r > a");
-        linkSet = new HashSet<>();
+        links = new ArrayList<>();
 
         for (Element result : results) {
             String linkHref = result.attr("href");
@@ -37,16 +60,16 @@ public class GooglePageParser implements LinkSearcher {
             addValidLink(linkHref);
         }
 
-        logger.info("For request " + "\"" + searchRequest + "\" " + "found " + linkSet.size() + " results");
+        logger.info("For request " + "\"" + searchRequest + "\" " + "found " + links.size() + " results");
 
-        return linkSet;
+        return links;
     }
 
     private void addValidLink(String linkHref) {
         String link = getRootOfURL(linkHref);
 
         if (!link.equals("")) {
-            linkSet.add(link);
+            links.add(link);
         }
     }
 

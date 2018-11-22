@@ -5,11 +5,11 @@
 
     <groupId>com.example</groupId>
     <artifactId>site_reader</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>site_reader</name>
-    <description>Demo project for Spring Boot</description>
+    <!--<searchRequest>Demo project for Spring Boot</searchRequest>-->
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -46,6 +46,17 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>2.11.0</version>
@@ -61,6 +72,14 @@
             <artifactId>jsoup</artifactId>
             <version>1.11.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>

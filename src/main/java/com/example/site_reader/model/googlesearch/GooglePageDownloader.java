@@ -23,7 +23,9 @@ public class GooglePageDownloader {
                 Document doc = null;
 
         try {
-            doc = Jsoup.connect(searchURL).userAgent("Mozilla/5.0").get();
+            doc = Jsoup.connect(searchURL)
+                    .userAgent("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+                    .get();
         } catch (IOException e) {
             logger.info("Could not get a google page. IOException");
             e.printStackTrace();

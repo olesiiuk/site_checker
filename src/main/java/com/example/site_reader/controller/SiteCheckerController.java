@@ -1,8 +1,10 @@
 package com.example.site_reader.controller;
 
-import com.example.site_reader.model.FileModel;
-import com.example.site_reader.model.FileParser;
-import com.example.site_reader.model.SiteChecker;
+import com.example.site_reader.model.domain.Site;
+import com.example.site_reader.model.fileworker.FileModel;
+import com.example.site_reader.model.fileworker.FileParser;
+import com.example.site_reader.model.service.SiteService;
+import com.example.site_reader.model.sitechecker.SiteChecker;
 import com.example.site_reader.model.googlesearch.LinkSearcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class SiteCheckerController {
+
+    @Autowired
+    private SiteService siteService;
 
     private LinkSearcher linkSearcher;
 
@@ -34,10 +39,20 @@ public class SiteCheckerController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView homepage() {
-        ModelAndView modelAndView = new ModelAndView("home");
+        ModelAndView modelAndView = new ModelAndView("index");
 
         FileModel fileModel = new FileModel();
         modelAndView.addObject("fileModel", fileModel);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/base", method = RequestMethod.GET)
+    public ModelAndView sitesPage() {
+        ModelAndView modelAndView = new ModelAndView("base");
+
+        List<Site> siteList = siteService.findAll();
+        modelAndView.addObject("siteList", siteList);
 
         return modelAndView;
     }
@@ -46,13 +61,8 @@ public class SiteCheckerController {
     public ModelAndView uploadFile(@Validated FileModel file, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("home");
 
-        System.out.println("\n ========================================== \n");
-        System.out.println("file has been uploaded");
-        System.out.println(file.getFile().getSize());
-        System.out.println("\n ========================================== \n");
-
-        Set<String> sitesToCheck = fileParser.getURLsFromFile(file.getFile());
-        Map<String, String> checkedSites = siteChecker.checkSites(sitesToCheck);
+        List<String> sitesToCheck = fileParser.getURLsFromFile(file.getFile());
+        Map<String, Integer> checkedSites = siteChecker.checkSites(sitesToCheck);
 
         modelAndView.addObject("checkedSites", checkedSites);
         modelAndView.addObject("successMessage", "File has been uploaded");
@@ -66,8 +76,9 @@ public class SiteCheckerController {
 
         ModelAndView modelAndView = new ModelAndView("home");
 
-        Set<String> sitesToCheck = linkSearcher.getSearchResultLinks(searchRequest, resultQuantity);
-        Map<String, String> checkedSites = siteChecker.checkSites(sitesToCheck);
+        List<String> sitesToCheck = linkSearcher.getSearchResultLinks(searchRequest, resultQuantity);
+        Map<String, Integer> checkedSites = siteChecker.checkSites(sitesToCheck);
+        List<Site> siteList = siteService.generateAndSaveSites(checkedSites, searchRequest);
 
         modelAndView.addObject("query", "Your search request: " + "\"" + searchRequest + "\""
                 + " quantity of searched results: " + resultQuantity);
@@ -75,6 +86,5 @@ public class SiteCheckerController {
 
         return modelAndView;
     }
-
 
 }

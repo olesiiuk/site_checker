@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Prestashop Base</title>
+    <link rel="stylesheet" th:href="@{css/normalize.css}">
+    <link rel="stylesheet" th:href="@{library/owlcarousel/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{library/owlcarousel/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{library/fancybox/jquery.fancybox.min.css}">
+    <link rel="stylesheet" th:href="@{library/awesome-select/awselect.min.css}">
+    <link rel="stylesheet" th:href="@{css/animate.css}">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{css/media.css}">
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600|Ubuntu+Condensed" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div class="logo">
+            <a href="http://dev.prestashop-freelance.com/">
+                <img src="http://dev.prestashop-freelance.com/img/logo.png" alt="prestashop-freelance-logo">
+            </a>
+        </div>
+        <nav>
+            <ul class="nav__list">
+                <li class="nav__item tab">
+                    <a th:href="@{/}" class="nav__link">Поиск</a>
+                </li>
+                <li class="nav__item tab">
+                    <a th:href="@{/}" class="nav__link">Результат</a>
+                </li>
+                <li class="nav__item tab">
+                    <a th:href="@{/base}" class="nav__link">База сайтов</a>
+                </li>
+                <li class="nav__item tab">
+                    <a th:href="@{/base}" class="nav__link">Наши клиенты</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="catalog tab_item">
+        <div class="catalog__nav">
+            <p>Показать:</p>
+            <button class="catalog__btn catalog__btn--active">Все</button>
+            <button class="catalog__btn">Заполненные</button>
+            <button class="catalog__btn">Пустые</button>
+        </div>
+        <div class="result">
+            <ul class="result__list">
+                <li class="result__item" th:each="site : ${siteList}">
+                    <div class="result__content">
+                        <span class="result__dot">&#8226;</span>
+                        <span class="result__position" th:text="'#' + ${site.getPosition()}"></span>
+                        <p class="result__title"><a class="result__link" th:href="${site.getDomain()}" th:text="${site.getDomain()}"></a>
+                            <span class="result__subtitle" th:text="${site.getSearchRequest()}"></span></p>
+                        <div class="result__time">
+                            <p class="result__time-date"><img src="img/calendar.svg" class="result-icon" alt="icon"
+                                                              width="24"><span th:text="${site.getDate()}"></span></p>
+                            <p class="result__time-hours"><img src="img/clock.svg" class="result-icon" alt="icon"
+                                                               width="24"><span>4:33pm</span></p>
+                        </div>
+                        <button class="result__btn-more-item">Подробнее</button>
+                        <button class="result__btn-save-item"><i class="fas fa-check"></i>&nbsp;&nbsp;&nbsp;Сохранить
+                        </button>
+                    </div>
+                    <div class="catalog__sort">
+                        <form action="#" class="catalog__sort-form">
+                            <div class="catalog__sort-form-left">
+                                <input class="email" type="email" placeholder="Email" th:value="${site.getSiteDescription().getEmail()}">
+                                <input class="label-input" type="text" placeholder="Метка" th:value="${site.getSiteDescription().getLabel()}">
+                                <select name="#" id="prestashop_version" data-placeholder="Версия Prestashop">
+                                    <option th:text="${site.getSiteDescription().getPSVersion()}"
+                                            th:value="${site.getSiteDescription().getPSVersion()}" th:selected="selected">
+                                    </option>
+                                    <option value="">1.3</option>
+                                    <option value="">1.4</option>
+                                    <option value="">1.5</option>
+                                    <option value="">1.6</option>
+                                    <option value="">1.7</option>
+                                </select>
+                            </div>
+                            <div class="catalog__sort-form-center">
+                                <input class="template-input" type="text" placeholder="Шаблон"
+                                       th:value="${site.getSiteDescription().getTemplate()}">
+                                <input class="adaptive-input" type="text" placeholder="Адаптивный дизайн"
+                                       th:value="${site.getSiteDescription().getAdaptive()}">
+                                <input class="googleSpeedDesktop-input" type="text" placeholder="Google Speed Test Desctop"
+                                       th:value="${site.getSiteDescription().getGoogleSpeedDesktop()}">
+                                <input class="googleSpeedMobile-input" type="text" placeholder="Google Speed Test Mobile"
+                                       th:value="${site.getSiteDescription().getGSTMobile()}">
+                                <input class="downloadTime-input" type="text" placeholder="Скорость загрузки"
+                                       th:value="${site.getSiteDescription().getDownloadTime()}">
+                                <input class="errors-input" type="text" placeholder="Наличие ошибок"
+                                       th:value="${site.getSiteDescription().getErrors()}">
+                            </div>
+                            <div class="catalog__sort-form-right">
+                                <select name="" id="seo" data-placeholder="Сео оптимизация">
+                                    <option th:value="${site.getSiteDescription().getSeo()}" th:selected="selected"
+                                            th:text="${site.getSiteDescription().getSeo()}">
+                                    </option>
+                                    <option value="Отсутствует">Отсутствует</option>
+                                    <option value="Плохая">Плохая</option>
+                                    <option value="Среднея">Среднея</option>
+                                    <option value="Хорошая">Хорошая</option>
+                                </select>
+                                <select name="" id="cpu" data-placeholder="ЧПУ">
+                                    <option th:selected="selected" th:text="${site.getSiteDescription().getFriendlyLinks()}"
+                                        th:value="${site.getSiteDescription().getFriendlyLinks()}">
+                                    </option>
+                                    <option value="ID  + Кириллица + Плохая вложенность">ID + Кириллица + Плохая
+                                        вложенность
+                                    </option>
+                                    <option value="Кириллица">Кириллица</option>
+                                    <option value="ID">ID</option>
+                                    <option value="Плохая вложенность">Плохая вложенность</option>
+                                </select>
+                                <select name="" id="structure" data-placeholder="Структура">
+                                    <option th:selected="selected" th:value="${site.getSiteDescription().getStructure()}"
+                                        th:text="${site.getSiteDescription().getStructure()}">
+                                    </option>
+                                    <option value="Плохая">Плохая</option>
+                                    <option value="Нормальная">Нормальная</option>
+                                    <option value="Хорошая">Хорошая</option>
+                                </select>
+                                <select name="" id="headings" data-placeholder="Лишние заголовки">
+                                    <option th:selected="selected" th:value="${site.getSiteDescription().getExtraHeadings()}"
+                                        th:text="${site.getSiteDescription().getExtraHeadings()}">
+                                    </option>
+                                    <option value="Модули + Продукты">Модули + Продукты</option>
+                                    <option value="Модули">Модули</option>
+                                    <option value="Продукты">Продукты</option>
+                                    <option value="Отсутствуют">Отсутствуют</option>
+                                </select>
+                                <select name="" id="links" data-placeholder="Ссылки">
+                                    <option th:text="${site.getSiteDescription().getLinks()}" th:selected="selected"
+                                        th:value="${site.getSiteDescription().getLinks()}">
+                                    </option>
+                                    <option value="Исходящие + Цикличиские">Исходящие + Цикличиские</option>
+                                    <option value="Исходящие">Исходящие</option>
+                                    <option value="Циклические">Циклические</option>
+                                    <option value="Все хорошо">Все хорошо</option>
+                                </select>
+                                <select name="" id="texts" data-placeholder="Наличие текстов">
+                                    <option th:value="${site.getSiteDescription().getTexts()}" th:selected="selected"
+                                        th:text="${site.getSiteDescription().getTexts()}">
+                                    </option>
+                                    <option value="Нет">Нет</option>
+                                    <option value="Есть">Есть</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <!--<li class="result__item">-->
+                    <!--<div class="result__content">-->
+                        <!--<span class="result__dot">&#8226;</span>-->
+                        <!--<span class="result__position">#3</span>-->
+                        <!--<p class="result__title"><a href="#" class="result__link">https://riszdvo.com.ua</a>-->
+                            <!--<span class="result__subtitle">Купить искуственную елку</span></p>-->
+                        <!--<div class="result__time">-->
+                            <!--<p class="result__time-date"><img src="img/calendar.svg" class="result-icon" alt="icon"-->
+                                                              <!--width="24"><span>Friday, 18 June 2018</span></p>-->
+                            <!--<p class="result__time-hours"><img src="img/clock.svg" class="result-icon" alt="icon"-->
+                                                               <!--width="24"><span>4:33pm</span></p>-->
+                        <!--</div>-->
+                        <!--<button class="result__btn-more-item">Подробнее</button>-->
+                        <!--<button class="result__btn-save-item"><i class="fas fa-check"></i>&nbsp;&nbsp;&nbsp;Сохранить-->
+                        <!--</button>-->
+                    <!--</div>-->
+                    <!--<div class="catalog__sort">-->
+                        <!--<form action="#" class="catalog__sort-form">-->
+                            <!--<div class="catalog__sort-form-left">-->
+                                <!--<input type="email" placeholder="Email">-->
+                                <!--<input type="text" placeholder="Метка">-->
+                                <!--<select name="#" id="prestashop_version" data-placeholder="Версия Prestashop">-->
+                                    <!--<option value="">1.3</option>-->
+                                    <!--<option value="">1.4</option>-->
+                                    <!--<option value="">1.5</option>-->
+                                    <!--<option value="">1.6</option>-->
+                                    <!--<option value="">1.7</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-center">-->
+                                <!--<input type="text" placeholder="Шаблон">-->
+                                <!--<input type="text" placeholder="Адаптивный дизайн">-->
+                                <!--<input type="text" placeholder="Google Speed Test Desctop">-->
+                                <!--<input type="text" placeholder="Google Speed Test Mobile">-->
+                                <!--<input type="text" placeholder="Скорость загрузки">-->
+                                <!--<input type="text" placeholder="Наличие ошибок">-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-right">-->
+                                <!--<select name="" id="seo" data-placeholder="Сео оптимизация">-->
+                                    <!--<option value="Отсутствует">Отсутствует</option>-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Среднея">Среднея</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="cpu" data-placeholder="ЧПУ">-->
+                                    <!--<option value="ID  + Кириллица + Плохая вложенность">ID + Кириллица + Плохая-->
+                                        <!--вложенность-->
+                                    <!--</option>-->
+                                    <!--<option value="Кириллица">Кириллица</option>-->
+                                    <!--<option value="ID">ID</option>-->
+                                    <!--<option value="Плохая вложенность">Плохая вложенность</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="structure" data-placeholder="Структура">-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Нормальная">Нормальная</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="headings" data-placeholder="Лишние заголовки">-->
+                                    <!--<option value="Модули + Продукты">Модули + Продукты</option>-->
+                                    <!--<option value="Модули">Модули</option>-->
+                                    <!--<option value="Продукты">Продукты</option>-->
+                                    <!--<option value="Отсутствуют">Отсутствуют</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="links" data-placeholder="Ссылки">-->
+                                    <!--<option value="Исходящие + Цикличиские">Исходящие + Цикличиские</option>-->
+                                    <!--<option value="Исходящие">Исходящие</option>-->
+                                    <!--<option value="Циклические">Циклические</option>-->
+                                    <!--<option value="Все хорошо">Все хорошо</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="texts" data-placeholder="Наличие текстов">-->
+                                    <!--<option value="Нет">Нет</option>-->
+                                    <!--<option value="Есть">Есть</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                <!--</li>-->
+                <!--<li class="result__item">-->
+                    <!--<div class="result__content">-->
+                        <!--<span class="result__dot">&#8226;</span>-->
+                        <!--<span class="result__position">#3</span>-->
+                        <!--<p class="result__title"><a href="#" class="result__link">https://riszdvo.com.ua</a>-->
+                            <!--<span class="result__subtitle">Купить искуственную елку</span></p>-->
+                        <!--<div class="result__time">-->
+                            <!--<p class="result__time-date"><img src="img/calendar.svg" class="result-icon" alt="icon"-->
+                                                              <!--width="24"><span>Friday, 18 June 2018</span></p>-->
+                            <!--<p class="result__time-hours"><img src="img/clock.svg" class="result-icon" alt="icon"-->
+                                                               <!--width="24"><span>4:33pm</span></p>-->
+                        <!--</div>-->
+                        <!--<button class="result__btn-more-item">Подробнее</button>-->
+                        <!--<button class="result__btn-save-item"><i class="fas fa-check"></i>&nbsp;&nbsp;&nbsp;Сохранить-->
+                        <!--</button>-->
+                    <!--</div>-->
+                    <!--<div class="catalog__sort">-->
+                        <!--<form action="#" class="catalog__sort-form">-->
+                            <!--<div class="catalog__sort-form-left">-->
+                                <!--<input type="email" placeholder="Email">-->
+                                <!--<input type="text" placeholder="Метка">-->
+                                <!--<select name="#" id="prestashop_version" data-placeholder="Версия Prestashop">-->
+                                    <!--<option value="">1.3</option>-->
+                                    <!--<option value="">1.4</option>-->
+                                    <!--<option value="">1.5</option>-->
+                                    <!--<option value="">1.6</option>-->
+                                    <!--<option value="">1.7</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-center">-->
+                                <!--<input type="text" placeholder="Шаблон">-->
+                                <!--<input type="text" placeholder="Адаптивный дизайн">-->
+                                <!--<input type="text" placeholder="Google Speed Test Desctop">-->
+                                <!--<input type="text" placeholder="Google Speed Test Mobile">-->
+                                <!--<input type="text" placeholder="Скорость загрузки">-->
+                                <!--<input type="text" placeholder="Наличие ошибок">-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-right">-->
+                                <!--<select name="" id="seo" data-placeholder="Сео оптимизация">-->
+                                    <!--<option value="Отсутствует">Отсутствует</option>-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Среднея">Среднея</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="cpu" data-placeholder="ЧПУ">-->
+                                    <!--<option value="ID  + Кириллица + Плохая вложенность">ID + Кириллица + Плохая-->
+                                        <!--вложенность-->
+                                    <!--</option>-->
+                                    <!--<option value="Кириллица">Кириллица</option>-->
+                                    <!--<option value="ID">ID</option>-->
+                                    <!--<option value="Плохая вложенность">Плохая вложенность</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="structure" data-placeholder="Структура">-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Нормальная">Нормальная</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="headings" data-placeholder="Лишние заголовки">-->
+                                    <!--<option value="Модули + Продукты">Модули + Продукты</option>-->
+                                    <!--<option value="Модули">Модули</option>-->
+                                    <!--<option value="Продукты">Продукты</option>-->
+                                    <!--<option value="Отсутствуют">Отсутствуют</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="links" data-placeholder="Ссылки">-->
+                                    <!--<option value="Исходящие + Цикличиские">Исходящие + Цикличиские</option>-->
+                                    <!--<option value="Исходящие">Исходящие</option>-->
+                                    <!--<option value="Циклические">Циклические</option>-->
+                                    <!--<option value="Все хорошо">Все хорошо</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="texts" data-placeholder="Наличие текстов">-->
+                                    <!--<option value="Нет">Нет</option>-->
+                                    <!--<option value="Есть">Есть</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                <!--</li>-->
+            </ul>
+        </div>
+    </div>
+</main>
+<footer>
+</footer>
+<script th:src="@{js/jquery-3.2.1.js}"></script>
+<!--<script>-->
+<!--window.jQuery || document.write('<script src="library/jquery/jquery-3.3.1.min.js"><\/script>');-->
+<!--</script>-->
+<script th:src="@{library/fontawesome/fontawesome-all.min.js}"></script>
+<script th:src="@{library/owlcarousel/owl.carousel.min.js}"></script>
+<script th:src="@{library/fancybox/jquery.fancybox.min.js}"></script>
+<script th:src="@{library/awesome-select/awselect.min.js}"></script>
+<script th:src="@{library/wow/wow.min.js}"></script>
+<script th:src="@{js/common.js}"></script>
+
+
+<script th:src="@{js/base.js}"></script>
+
+</body>
+</html>

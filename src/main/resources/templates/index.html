@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Prestashop Checker</title>
+    <link rel="stylesheet" th:href="@{css/normalize.css}">
+    <link rel="stylesheet" th:href="@{library/owlcarousel/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{library/owlcarousel/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{library/fancybox/jquery.fancybox.min.css}">
+    <link rel="stylesheet" th:href="@{library/awesome-select/awselect.min.css}">
+    <link rel="stylesheet" th:href="@{css/animate.css}">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{css/media.css}">
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600|Ubuntu+Condensed" rel="stylesheet">
+
+
+</head>
+
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div class="logo">
+            <a href="http://dev.prestashop-freelance.com/">
+                <img src="http://dev.prestashop-freelance.com/img/logo.png" alt="prestashop-freelance-logo">
+            </a>
+        </div>
+        <nav>
+            <!--TODO после перехода по данены-->
+            <ul class="nav__list">
+                <li class="nav__item tab">
+                    <a th:href="@{/}" class="nav__link">Поиск</a>
+                </li>
+                <li class="nav__item tab">
+                    <a th:href="@{/}" class="nav__link">Результат</a>
+                </li>
+                <li class="nav__item tab">
+                    <a th:href="@{/base}" class="nav__link">База сайтов</a>
+                </li>
+                <li class="nav__item tab">
+                    <a th:href="@{/base}" class="nav__link">Наши клиенты</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main>
+
+    <div class="search tab_item">
+        <form action="#" class="search__form">
+            <div class="search__inputs">
+                <input type="text" class="search__input" placeholder="Введите поисковый запрос">
+                <input type="number" class="search__input search__input--number" value="500" min="0">
+                <button class="search__btn-incr"><i class="fas fa-plus"></i></button>
+            </div>
+            <button class="search__upload">Загрузить</button>
+            <button class="search__submit" type="submit"><i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;Искать</button>
+        </form>
+        <div class="search-result">
+            <ul class="search-result__list">
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="result tab_item">
+        <ul class="result__list">
+
+        </ul>
+    </div>
+
+    <!--<div class="catalog tab_item">-->
+        <!--<div class="catalog__nav">-->
+            <!--<p>Показать:</p>-->
+            <!--<button class="catalog__btn catalog__btn&#45;&#45;active">Все</button>-->
+            <!--<button class="catalog__btn">Заполненные</button>-->
+            <!--<button class="catalog__btn">Пустые</button>-->
+        <!--</div>-->
+        <!--<div class="result">-->
+            <!--<ul class="result__list">-->
+                <!--<li class="result__item">-->
+                    <!--<div class="result__content">-->
+                        <!--<span class="result__dot">&#8226;</span>-->
+                        <!--<span class="result__position">#3</span>-->
+                        <!--<p class="result__title"><a href="#" class="result__link">https://riszdvo.com.ua</a>-->
+                            <!--<span class="result__subtitle">Купить искуственную елку</span></p>-->
+                        <!--<div class="result__time">-->
+                            <!--<p class="result__time-date"><img src="img/calendar.svg" class="result-icon" alt="icon"-->
+                                                              <!--width="24"><span>Friday, 18 June 2018</span></p>-->
+                            <!--<p class="result__time-hours"><img src="img/clock.svg" class="result-icon" alt="icon"-->
+                                                               <!--width="24"><span>4:33pm</span></p>-->
+                        <!--</div>-->
+                        <!--<button class="result__btn-more-item">Подробнее</button>-->
+                        <!--<button class="result__btn-save-item"><i class="fas fa-check"></i>&nbsp;&nbsp;&nbsp;Сохранить-->
+                        <!--</button>-->
+                    <!--</div>-->
+                    <!--<div class="catalog__sort">-->
+                        <!--<form action="#" class="catalog__sort-form">-->
+                            <!--<div class="catalog__sort-form-left">-->
+                                <!--<input type="email" placeholder="Email">-->
+                                <!--<input type="text" placeholder="Метка">-->
+                                <!--<select name="#" id="prestashop_version" data-placeholder="Версия Prestashop">-->
+                                    <!--<option value="">1.3</option>-->
+                                    <!--<option value="">1.4</option>-->
+                                    <!--<option value="">1.5</option>-->
+                                    <!--<option value="">1.6</option>-->
+                                    <!--<option value="">1.7</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-center">-->
+                                <!--<input type="text" placeholder="Шаблон">-->
+                                <!--<input type="text" placeholder="Адаптивный дизайн">-->
+                                <!--<input type="text" placeholder="Google Speed Test Desctop">-->
+                                <!--<input type="text" placeholder="Google Speed Test Mobile">-->
+                                <!--<input type="text" placeholder="Скорость загрузки">-->
+                                <!--<input type="text" placeholder="Наличие ошибок">-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-right">-->
+                                <!--<select name="" id="seo" data-placeholder="Сео оптимизация">-->
+                                    <!--<option value="Отсутствует">Отсутствует</option>-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Среднея">Среднея</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="cpu" data-placeholder="ЧПУ">-->
+                                    <!--<option value="ID  + Кириллица + Плохая вложенность">ID + Кириллица + Плохая-->
+                                        <!--вложенность-->
+                                    <!--</option>-->
+                                    <!--<option value="Кириллица">Кириллица</option>-->
+                                    <!--<option value="ID">ID</option>-->
+                                    <!--<option value="Плохая вложенность">Плохая вложенность</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="structure" data-placeholder="Структура">-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Нормальная">Нормальная</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="headings" data-placeholder="Лишние заголовки">-->
+                                    <!--<option value="Модули + Продукты">Модули + Продукты</option>-->
+                                    <!--<option value="Модули">Модули</option>-->
+                                    <!--<option value="Продукты">Продукты</option>-->
+                                    <!--<option value="Отсутствуют">Отсутствуют</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="links" data-placeholder="Ссылки">-->
+                                    <!--<option value="Исходящие + Цикличиские">Исходящие + Цикличиские</option>-->
+                                    <!--<option value="Исходящие">Исходящие</option>-->
+                                    <!--<option value="Циклические">Циклические</option>-->
+                                    <!--<option value="Все хорошо">Все хорошо</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="texts" data-placeholder="Наличие текстов">-->
+                                    <!--<option value="Нет">Нет</option>-->
+                                    <!--<option value="Есть">Есть</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                <!--</li>-->
+                <!--<li class="result__item">-->
+                    <!--<div class="result__content">-->
+                        <!--<span class="result__dot">&#8226;</span>-->
+                        <!--<span class="result__position">#3</span>-->
+                        <!--<p class="result__title"><a href="#" class="result__link">https://riszdvo.com.ua</a>-->
+                            <!--<span class="result__subtitle">Купить искуственную елку</span></p>-->
+                        <!--<div class="result__time">-->
+                            <!--<p class="result__time-date"><img src="img/calendar.svg" class="result-icon" alt="icon"-->
+                                                              <!--width="24"><span>Friday, 18 June 2018</span></p>-->
+                            <!--<p class="result__time-hours"><img src="img/clock.svg" class="result-icon" alt="icon"-->
+                                                               <!--width="24"><span>4:33pm</span></p>-->
+                        <!--</div>-->
+                        <!--<button class="result__btn-more-item">Подробнее</button>-->
+                        <!--<button class="result__btn-save-item"><i class="fas fa-check"></i>&nbsp;&nbsp;&nbsp;Сохранить-->
+                        <!--</button>-->
+                    <!--</div>-->
+                    <!--<div class="catalog__sort">-->
+                        <!--<form action="#" class="catalog__sort-form">-->
+                            <!--<div class="catalog__sort-form-left">-->
+                                <!--<input type="email" placeholder="Email">-->
+                                <!--<input type="text" placeholder="Метка">-->
+                                <!--<select name="#" id="prestashop_version" data-placeholder="Версия Prestashop">-->
+                                    <!--<option value="">1.3</option>-->
+                                    <!--<option value="">1.4</option>-->
+                                    <!--<option value="">1.5</option>-->
+                                    <!--<option value="">1.6</option>-->
+                                    <!--<option value="">1.7</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-center">-->
+                                <!--<input type="text" placeholder="Шаблон">-->
+                                <!--<input type="text" placeholder="Адаптивный дизайн">-->
+                                <!--<input type="text" placeholder="Google Speed Test Desctop">-->
+                                <!--<input type="text" placeholder="Google Speed Test Mobile">-->
+                                <!--<input type="text" placeholder="Скорость загрузки">-->
+                                <!--<input type="text" placeholder="Наличие ошибок">-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-right">-->
+                                <!--<select name="" id="seo" data-placeholder="Сео оптимизация">-->
+                                    <!--<option value="Отсутствует">Отсутствует</option>-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Среднея">Среднея</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="cpu" data-placeholder="ЧПУ">-->
+                                    <!--<option value="ID  + Кириллица + Плохая вложенность">ID + Кириллица + Плохая-->
+                                        <!--вложенность-->
+                                    <!--</option>-->
+                                    <!--<option value="Кириллица">Кириллица</option>-->
+                                    <!--<option value="ID">ID</option>-->
+                                    <!--<option value="Плохая вложенность">Плохая вложенность</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="structure" data-placeholder="Структура">-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Нормальная">Нормальная</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="headings" data-placeholder="Лишние заголовки">-->
+                                    <!--<option value="Модули + Продукты">Модули + Продукты</option>-->
+                                    <!--<option value="Модули">Модули</option>-->
+                                    <!--<option value="Продукты">Продукты</option>-->
+                                    <!--<option value="Отсутствуют">Отсутствуют</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="links" data-placeholder="Ссылки">-->
+                                    <!--<option value="Исходящие + Цикличиские">Исходящие + Цикличиские</option>-->
+                                    <!--<option value="Исходящие">Исходящие</option>-->
+                                    <!--<option value="Циклические">Циклические</option>-->
+                                    <!--<option value="Все хорошо">Все хорошо</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="texts" data-placeholder="Наличие текстов">-->
+                                    <!--<option value="Нет">Нет</option>-->
+                                    <!--<option value="Есть">Есть</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                <!--</li>-->
+                <!--<li class="result__item">-->
+                    <!--<div class="result__content">-->
+                        <!--<span class="result__dot">&#8226;</span>-->
+                        <!--<span class="result__position">#3</span>-->
+                        <!--<p class="result__title"><a href="#" class="result__link">https://riszdvo.com.ua</a>-->
+                            <!--<span class="result__subtitle">Купить искуственную елку</span></p>-->
+                        <!--<div class="result__time">-->
+                            <!--<p class="result__time-date"><img src="img/calendar.svg" class="result-icon" alt="icon"-->
+                                                              <!--width="24"><span>Friday, 18 June 2018</span></p>-->
+                            <!--<p class="result__time-hours"><img src="img/clock.svg" class="result-icon" alt="icon"-->
+                                                               <!--width="24"><span>4:33pm</span></p>-->
+                        <!--</div>-->
+                        <!--<button class="result__btn-more-item">Подробнее</button>-->
+                        <!--<button class="result__btn-save-item"><i class="fas fa-check"></i>&nbsp;&nbsp;&nbsp;Сохранить-->
+                        <!--</button>-->
+                    <!--</div>-->
+                    <!--<div class="catalog__sort">-->
+                        <!--<form action="#" class="catalog__sort-form">-->
+                            <!--<div class="catalog__sort-form-left">-->
+                                <!--<input type="email" placeholder="Email">-->
+                                <!--<input type="text" placeholder="Метка">-->
+                                <!--<select name="#" id="prestashop_version" data-placeholder="Версия Prestashop">-->
+                                    <!--<option value="">1.3</option>-->
+                                    <!--<option value="">1.4</option>-->
+                                    <!--<option value="">1.5</option>-->
+                                    <!--<option value="">1.6</option>-->
+                                    <!--<option value="">1.7</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-center">-->
+                                <!--<input type="text" placeholder="Шаблон">-->
+                                <!--<input type="text" placeholder="Адаптивный дизайн">-->
+                                <!--<input type="text" placeholder="Google Speed Test Desctop">-->
+                                <!--<input type="text" placeholder="Google Speed Test Mobile">-->
+                                <!--<input type="text" placeholder="Скорость загрузки">-->
+                                <!--<input type="text" placeholder="Наличие ошибок">-->
+                            <!--</div>-->
+                            <!--<div class="catalog__sort-form-right">-->
+                                <!--<select name="" id="seo" data-placeholder="Сео оптимизация">-->
+                                    <!--<option value="Отсутствует">Отсутствует</option>-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Среднея">Среднея</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="cpu" data-placeholder="ЧПУ">-->
+                                    <!--<option value="ID  + Кириллица + Плохая вложенность">ID + Кириллица + Плохая-->
+                                        <!--вложенность-->
+                                    <!--</option>-->
+                                    <!--<option value="Кириллица">Кириллица</option>-->
+                                    <!--<option value="ID">ID</option>-->
+                                    <!--<option value="Плохая вложенность">Плохая вложенность</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="structure" data-placeholder="Структура">-->
+                                    <!--<option value="Плохая">Плохая</option>-->
+                                    <!--<option value="Нормальная">Нормальная</option>-->
+                                    <!--<option value="Хорошая">Хорошая</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="headings" data-placeholder="Лишние заголовки">-->
+                                    <!--<option value="Модули + Продукты">Модули + Продукты</option>-->
+                                    <!--<option value="Модули">Модули</option>-->
+                                    <!--<option value="Продукты">Продукты</option>-->
+                                    <!--<option value="Отсутствуют">Отсутствуют</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="links" data-placeholder="Ссылки">-->
+                                    <!--<option value="Исходящие + Цикличиские">Исходящие + Цикличиские</option>-->
+                                    <!--<option value="Исходящие">Исходящие</option>-->
+                                    <!--<option value="Циклические">Циклические</option>-->
+                                    <!--<option value="Все хорошо">Все хорошо</option>-->
+                                <!--</select>-->
+                                <!--<select name="" id="texts" data-placeholder="Наличие текстов">-->
+                                    <!--<option value="Нет">Нет</option>-->
+                                    <!--<option value="Есть">Есть</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+</main>
+<footer>
+</footer>
+<script th:src="@{js/jquery-3.2.1.js}"></script>
+<!--<script>-->
+<!--window.jQuery || document.write('<script src="library/jquery/jquery-3.3.1.min.js"><\/script>');-->
+<!--</script>-->
+<script th:src="@{library/fontawesome/fontawesome-all.min.js}"></script>
+<script th:src="@{library/owlcarousel/owl.carousel.min.js}"></script>
+<script th:src="@{library/fancybox/jquery.fancybox.min.js}"></script>
+<script th:src="@{library/awesome-select/awselect.min.js}"></script>
+<script th:src="@{library/wow/wow.min.js}"></script>
+<script th:src="@{js/common.js}"></script>
+
+
+<script th:src="@{js/test.js}"></script>
+
+</body>
+
+</html>

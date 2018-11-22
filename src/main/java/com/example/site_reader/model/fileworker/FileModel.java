@@ -1,11 +1,11 @@
-package com.example.site_reader.model;
+package com.example.site_reader.model.fileworker;
 
 import org.springframework.web.multipart.MultipartFile;
 
 
 public class FileModel {
-    private MultipartFile file;
 
+    private MultipartFile file;
 
     public MultipartFile getFile() {
         return file;
