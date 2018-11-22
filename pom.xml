@@ -5,7 +5,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>site_reader</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.7-SNAPSHOT_mysql</version>
     <packaging>jar</packaging>
 
     <name>site_reader</name>
@@ -53,6 +53,13 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.12</version>
         </dependency>
 
         <dependency>
